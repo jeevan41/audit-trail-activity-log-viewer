@@ -87,7 +87,8 @@ def describe():
         response = client.chat.completions.create(
             model="mixtral-8x7b-32768",
             messages=[{"role": "user", "content": full_prompt}],
-            max_tokens=500
+            max_tokens=500,
+            timeout=10
         )
         
         generated_description = response.choices[0].message.content.strip()
@@ -102,8 +103,14 @@ def describe():
         return jsonify(result)
     
     except Exception as e:
+        # Fallback on Groq error
+        fallback_result = {
+            'description': 'Unable to analyze log entry at this time. Please try again later.',
+            'generated_at': datetime.utcnow().isoformat() + 'Z',
+            'is_fallback': True
+        }
         response_times.append(time.time() - start)
-        return jsonify({'error': str(e)}), 500
+        return jsonify(fallback_result)
 
 @app.route('/recommend', methods=['POST'])
 def recommend():
@@ -135,7 +142,8 @@ def recommend():
         response = client.chat.completions.create(
             model="mixtral-8x7b-32768",
             messages=[{"role": "user", "content": full_prompt}],
-            max_tokens=500
+            max_tokens=500,
+            timeout=10
         )
         
         generated_text = response.choices[0].message.content.strip()
@@ -162,8 +170,18 @@ def recommend():
         response_times.append(time.time() - start)
         return jsonify({'error': 'Failed to parse AI response as JSON'}), 500
     except Exception as e:
+        # Fallback on Groq error
+        fallback_result = {
+            'recommendations': [
+                {'action_type': 'monitor', 'description': 'Monitor the log entry for unusual activity', 'priority': 'medium'},
+                {'action_type': 'log', 'description': 'Ensure the event is properly logged', 'priority': 'low'},
+                {'action_type': 'review', 'description': 'Review similar entries for patterns', 'priority': 'low'}
+            ],
+            'generated_at': datetime.utcnow().isoformat() + 'Z',
+            'is_fallback': True
+        }
         response_times.append(time.time() - start)
-        return jsonify({'error': str(e)}), 500
+        return jsonify(fallback_result)
 
 @app.route('/generate-report', methods=['POST'])
 def generate_report():
@@ -199,7 +217,8 @@ def generate_report():
         response = client.chat.completions.create(
             model="mixtral-8x7b-32768",
             messages=[{"role": "user", "content": full_prompt}],
-            max_tokens=1000
+            max_tokens=1000,
+            timeout=10
         )
         
         generated_text = response.choices[0].message.content.strip()
@@ -221,8 +240,18 @@ def generate_report():
         response_times.append(time.time() - start)
         return jsonify({'error': 'Failed to parse AI response as JSON'}), 500
     except Exception as e:
+        # Fallback on Groq error
+        fallback_result = {
+            'title': 'Audit Report - Service Unavailable',
+            'summary': 'Unable to generate detailed report at this time.',
+            'overview': 'Please try again later.',
+            'key_items': ['Service temporarily unavailable'],
+            'recommendations': ['Retry the request', 'Check system status'],
+            'generated_at': datetime.utcnow().isoformat() + 'Z',
+            'is_fallback': True
+        }
         response_times.append(time.time() - start)
-        return jsonify({'error': str(e)}), 500
+        return jsonify(fallback_result)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
