@@ -1,0 +1,477 @@
+{
+  "test_timestamp": "2026-05-06 15:12:44",
+  "test_configuration": {
+    "base_url": "http://localhost:5000",
+    "iterations_per_endpoint": 5,
+    "groq_api_key_set": false
+  },
+  "performance_targets": {
+    "health": {
+      "max_avg_time": 1000,
+      "min_success_rate": 100
+    },
+    "describe": {
+      "max_avg_time": 8000,
+      "min_success_rate": 100
+    },
+    "recommend": {
+      "max_avg_time": 8000,
+      "min_success_rate": 100
+    },
+    "generate-report": {
+      "max_avg_time": 15000,
+      "min_success_rate": 100
+    }
+  },
+  "detailed_results": {
+    "health": [
+      {
+        "iteration": 1,
+        "status_code": 200,
+        "response_time_ms": 2072.65,
+        "timestamp": "15:10:51",
+        "response": {
+          "avg_response_time": 0,
+          "model": "mixtral-8x7b-32768",
+          "status": "healthy",
+          "uptime": 20.47
+        },
+        "is_fallback": false
+      },
+      {
+        "iteration": 2,
+        "status_code": 200,
+        "response_time_ms": 2066.56,
+        "timestamp": "15:10:54",
+        "response": {
+          "avg_response_time": 0,
+          "model": "mixtral-8x7b-32768",
+          "status": "healthy",
+          "uptime": 23.04
+        },
+        "is_fallback": false
+      },
+      {
+        "iteration": 3,
+        "status_code": 200,
+        "response_time_ms": 2066.58,
+        "timestamp": "15:10:56",
+        "response": {
+          "avg_response_time": 0,
+          "model": "mixtral-8x7b-32768",
+          "status": "healthy",
+          "uptime": 25.61
+        },
+        "is_fallback": false
+      },
+      {
+        "iteration": 4,
+        "status_code": 200,
+        "response_time_ms": 2043.82,
+        "timestamp": "15:10:59",
+        "response": {
+          "avg_response_time": 0,
+          "model": "mixtral-8x7b-32768",
+          "status": "healthy",
+          "uptime": 28.15
+        },
+        "is_fallback": false
+      },
+      {
+        "iteration": 5,
+        "status_code": 200,
+        "response_time_ms": 2051.88,
+        "timestamp": "15:11:01",
+        "response": {
+          "avg_response_time": 0,
+          "model": "mixtral-8x7b-32768",
+          "status": "healthy",
+          "uptime": 30.71
+        },
+        "is_fallback": false
+      }
+    ],
+    "describe": [
+      {
+        "iteration": 1,
+        "status_code": 200,
+        "response_time_ms": 6163.45,
+        "timestamp": "15:11:04",
+        "cache_key": "e11baa474f2bd4b27040c29b97f2eaa9a505c5bdb587059adf082a81572cd6e6",
+        "response": {
+          "description": "Unable to analyze log entry at this time. Please try again later.",
+          "generated_at": "2026-05-06T09:41:10.623703Z",
+          "is_fallback": true
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 2,
+        "status_code": 200,
+        "response_time_ms": 6114.99,
+        "timestamp": "15:11:11",
+        "cache_key": "e11baa474f2bd4b27040c29b97f2eaa9a505c5bdb587059adf082a81572cd6e6",
+        "response": {
+          "description": "Unable to analyze log entry at this time. Please try again later.",
+          "generated_at": "2026-05-06T09:41:17.259687Z",
+          "is_fallback": true
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 3,
+        "status_code": 200,
+        "response_time_ms": 6147.75,
+        "timestamp": "15:11:17",
+        "cache_key": "e11baa474f2bd4b27040c29b97f2eaa9a505c5bdb587059adf082a81572cd6e6",
+        "response": {
+          "description": "Unable to analyze log entry at this time. Please try again later.",
+          "generated_at": "2026-05-06T09:41:23.908540Z",
+          "is_fallback": true
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 4,
+        "status_code": 200,
+        "response_time_ms": 6201.69,
+        "timestamp": "15:11:24",
+        "cache_key": "e11baa474f2bd4b27040c29b97f2eaa9a505c5bdb587059adf082a81572cd6e6",
+        "response": {
+          "description": "Unable to analyze log entry at this time. Please try again later.",
+          "generated_at": "2026-05-06T09:41:30.611337Z",
+          "is_fallback": true
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 5,
+        "status_code": 200,
+        "response_time_ms": 6158.14,
+        "timestamp": "15:11:31",
+        "cache_key": "e11baa474f2bd4b27040c29b97f2eaa9a505c5bdb587059adf082a81572cd6e6",
+        "response": {
+          "description": "Unable to analyze log entry at this time. Please try again later.",
+          "generated_at": "2026-05-06T09:41:37.271699Z",
+          "is_fallback": true
+        },
+        "is_fallback": true
+      }
+    ],
+    "recommend": [
+      {
+        "iteration": 1,
+        "status_code": 200,
+        "response_time_ms": 6160.14,
+        "timestamp": "15:11:37",
+        "cache_key": "c8a1dd8505ccd4f66a2546b310117ea92b0570f3c53e74be92f80ec16d4c9adb",
+        "response": {
+          "generated_at": "2026-05-06T09:41:43.932728Z",
+          "is_fallback": true,
+          "recommendations": [
+            {
+              "action_type": "monitor",
+              "description": "Monitor the log entry for unusual activity",
+              "priority": "medium"
+            },
+            {
+              "action_type": "log",
+              "description": "Ensure the event is properly logged",
+              "priority": "low"
+            },
+            {
+              "action_type": "review",
+              "description": "Review similar entries for patterns",
+              "priority": "low"
+            }
+          ]
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 2,
+        "status_code": 200,
+        "response_time_ms": 6166.83,
+        "timestamp": "15:11:44",
+        "cache_key": "c8a1dd8505ccd4f66a2546b310117ea92b0570f3c53e74be92f80ec16d4c9adb",
+        "response": {
+          "generated_at": "2026-05-06T09:41:50.600464Z",
+          "is_fallback": true,
+          "recommendations": [
+            {
+              "action_type": "monitor",
+              "description": "Monitor the log entry for unusual activity",
+              "priority": "medium"
+            },
+            {
+              "action_type": "log",
+              "description": "Ensure the event is properly logged",
+              "priority": "low"
+            },
+            {
+              "action_type": "review",
+              "description": "Review similar entries for patterns",
+              "priority": "low"
+            }
+          ]
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 3,
+        "status_code": 200,
+        "response_time_ms": 6143.32,
+        "timestamp": "15:11:51",
+        "cache_key": "c8a1dd8505ccd4f66a2546b310117ea92b0570f3c53e74be92f80ec16d4c9adb",
+        "response": {
+          "generated_at": "2026-05-06T09:41:57.249904Z",
+          "is_fallback": true,
+          "recommendations": [
+            {
+              "action_type": "monitor",
+              "description": "Monitor the log entry for unusual activity",
+              "priority": "medium"
+            },
+            {
+              "action_type": "log",
+              "description": "Ensure the event is properly logged",
+              "priority": "low"
+            },
+            {
+              "action_type": "review",
+              "description": "Review similar entries for patterns",
+              "priority": "low"
+            }
+          ]
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 4,
+        "status_code": 200,
+        "response_time_ms": 6174.32,
+        "timestamp": "15:11:57",
+        "cache_key": "c8a1dd8505ccd4f66a2546b310117ea92b0570f3c53e74be92f80ec16d4c9adb",
+        "response": {
+          "generated_at": "2026-05-06T09:42:03.925766Z",
+          "is_fallback": true,
+          "recommendations": [
+            {
+              "action_type": "monitor",
+              "description": "Monitor the log entry for unusual activity",
+              "priority": "medium"
+            },
+            {
+              "action_type": "log",
+              "description": "Ensure the event is properly logged",
+              "priority": "low"
+            },
+            {
+              "action_type": "review",
+              "description": "Review similar entries for patterns",
+              "priority": "low"
+            }
+          ]
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 5,
+        "status_code": 200,
+        "response_time_ms": 6141.3,
+        "timestamp": "15:12:04",
+        "cache_key": "c8a1dd8505ccd4f66a2546b310117ea92b0570f3c53e74be92f80ec16d4c9adb",
+        "response": {
+          "generated_at": "2026-05-06T09:42:10.570879Z",
+          "is_fallback": true,
+          "recommendations": [
+            {
+              "action_type": "monitor",
+              "description": "Monitor the log entry for unusual activity",
+              "priority": "medium"
+            },
+            {
+              "action_type": "log",
+              "description": "Ensure the event is properly logged",
+              "priority": "low"
+            },
+            {
+              "action_type": "review",
+              "description": "Review similar entries for patterns",
+              "priority": "low"
+            }
+          ]
+        },
+        "is_fallback": true
+      }
+    ],
+    "generate-report": [
+      {
+        "iteration": 1,
+        "status_code": 200,
+        "response_time_ms": 6166.68,
+        "timestamp": "15:12:11",
+        "cache_key": "c52565e8424a23bec37eb76f7cf2f620de9d6e64513947bcf2ad9e360e9ed15b",
+        "response": {
+          "generated_at": "2026-05-06T09:42:17.238852Z",
+          "is_fallback": true,
+          "key_items": [
+            "Service temporarily unavailable"
+          ],
+          "overview": "Please try again later.",
+          "recommendations": [
+            "Retry the request",
+            "Check system status"
+          ],
+          "summary": "Unable to generate detailed report at this time.",
+          "title": "Audit Report - Service Unavailable"
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 2,
+        "status_code": 200,
+        "response_time_ms": 6130.03,
+        "timestamp": "15:12:17",
+        "cache_key": "c52565e8424a23bec37eb76f7cf2f620de9d6e64513947bcf2ad9e360e9ed15b",
+        "response": {
+          "generated_at": "2026-05-06T09:42:23.870974Z",
+          "is_fallback": true,
+          "key_items": [
+            "Service temporarily unavailable"
+          ],
+          "overview": "Please try again later.",
+          "recommendations": [
+            "Retry the request",
+            "Check system status"
+          ],
+          "summary": "Unable to generate detailed report at this time.",
+          "title": "Audit Report - Service Unavailable"
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 3,
+        "status_code": 200,
+        "response_time_ms": 6165.0,
+        "timestamp": "15:12:24",
+        "cache_key": "c52565e8424a23bec37eb76f7cf2f620de9d6e64513947bcf2ad9e360e9ed15b",
+        "response": {
+          "generated_at": "2026-05-06T09:42:30.535116Z",
+          "is_fallback": true,
+          "key_items": [
+            "Service temporarily unavailable"
+          ],
+          "overview": "Please try again later.",
+          "recommendations": [
+            "Retry the request",
+            "Check system status"
+          ],
+          "summary": "Unable to generate detailed report at this time.",
+          "title": "Audit Report - Service Unavailable"
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 4,
+        "status_code": 200,
+        "response_time_ms": 6089.53,
+        "timestamp": "15:12:31",
+        "cache_key": "c52565e8424a23bec37eb76f7cf2f620de9d6e64513947bcf2ad9e360e9ed15b",
+        "response": {
+          "generated_at": "2026-05-06T09:42:37.125611Z",
+          "is_fallback": true,
+          "key_items": [
+            "Service temporarily unavailable"
+          ],
+          "overview": "Please try again later.",
+          "recommendations": [
+            "Retry the request",
+            "Check system status"
+          ],
+          "summary": "Unable to generate detailed report at this time.",
+          "title": "Audit Report - Service Unavailable"
+        },
+        "is_fallback": true
+      },
+      {
+        "iteration": 5,
+        "status_code": 200,
+        "response_time_ms": 6153.44,
+        "timestamp": "15:12:37",
+        "cache_key": "c52565e8424a23bec37eb76f7cf2f620de9d6e64513947bcf2ad9e360e9ed15b",
+        "response": {
+          "generated_at": "2026-05-06T09:42:43.780530Z",
+          "is_fallback": true,
+          "key_items": [
+            "Service temporarily unavailable"
+          ],
+          "overview": "Please try again later.",
+          "recommendations": [
+            "Retry the request",
+            "Check system status"
+          ],
+          "summary": "Unable to generate detailed report at this time.",
+          "title": "Audit Report - Service Unavailable"
+        },
+        "is_fallback": true
+      }
+    ]
+  },
+  "analyses": {
+    "health": {
+      "endpoint": "health",
+      "total_requests": 5,
+      "successful_requests": 5,
+      "success_rate": 100.0,
+      "fallback_responses": 0,
+      "cache_working": false,
+      "avg_response_time_ms": 2060.3,
+      "min_response_time_ms": 2043.82,
+      "max_response_time_ms": 2072.65,
+      "target_met": false
+    },
+    "describe": {
+      "endpoint": "describe",
+      "total_requests": 5,
+      "successful_requests": 5,
+      "success_rate": 100.0,
+      "fallback_responses": 5,
+      "cache_working": false,
+      "avg_response_time_ms": 6157.2,
+      "min_response_time_ms": 6114.99,
+      "max_response_time_ms": 6201.69,
+      "target_met": true
+    },
+    "recommend": {
+      "endpoint": "recommend",
+      "total_requests": 5,
+      "successful_requests": 5,
+      "success_rate": 100.0,
+      "fallback_responses": 5,
+      "cache_working": false,
+      "avg_response_time_ms": 6157.18,
+      "min_response_time_ms": 6141.3,
+      "max_response_time_ms": 6174.32,
+      "target_met": true
+    },
+    "generate-report": {
+      "endpoint": "generate-report",
+      "total_requests": 5,
+      "successful_requests": 5,
+      "success_rate": 100.0,
+      "fallback_responses": 5,
+      "cache_working": false,
+      "avg_response_time_ms": 6140.94,
+      "min_response_time_ms": 6089.53,
+      "max_response_time_ms": 6166.68,
+      "target_met": true
+    }
+  },
+  "overall_assessment": {
+    "all_targets_met": false,
+    "cache_working": false,
+    "fallback_working": true,
+    "production_ready": false
+  }
+}
