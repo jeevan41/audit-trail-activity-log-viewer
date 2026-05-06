@@ -7,12 +7,27 @@ import json
 import redis
 import hashlib
 import time
+# from sentence_transformers import SentenceTransformer  # Commented out due to import issues
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 CORS(app)
 
+# Rate limiting
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    default_limits=["100 per minute"]
+)
+
 # Track startup time for uptime
 start_time = time.time()
+
+# Pre-load sentence transformer model at startup (commented out due to version conflicts)
+# print("Loading sentence transformer model...")
+# model = SentenceTransformer('all-MiniLM-L6-v2')
+# print("Sentence transformer model loaded.")
 
 # Redis client
 redis_client = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
@@ -58,6 +73,7 @@ def health():
     })
 
 @app.route('/describe', methods=['POST'])
+@limiter.limit("10 per minute")
 def describe():
     start = time.time()
     try:
@@ -65,9 +81,9 @@ def describe():
         if not data or 'log_entry' not in data:
             return jsonify({'error': 'Missing log_entry in request body'}), 400
         
-        log_entry = data['log_entry']
-        if not isinstance(log_entry, str) or not log_entry.strip():
-            return jsonify({'error': 'log_entry must be a non-empty string'}), 400
+        log_entry = data['log_entry'].strip()
+        if not isinstance(log_entry, str) or not log_entry or len(log_entry) > 1000:
+            return jsonify({'error': 'log_entry must be a non-empty string under 1000 characters'}), 400
         
         cache_key = get_cache_key(f"describe:{log_entry}")
         cached = get_cached_response(cache_key)
@@ -113,6 +129,7 @@ def describe():
         return jsonify(fallback_result)
 
 @app.route('/recommend', methods=['POST'])
+@limiter.limit("10 per minute")
 def recommend():
     start = time.time()
     try:
@@ -120,9 +137,9 @@ def recommend():
         if not data or 'log_entry' not in data:
             return jsonify({'error': 'Missing log_entry in request body'}), 400
         
-        log_entry = data['log_entry']
-        if not isinstance(log_entry, str) or not log_entry.strip():
-            return jsonify({'error': 'log_entry must be a non-empty string'}), 400
+        log_entry = data['log_entry'].strip()
+        if not isinstance(log_entry, str) or not log_entry or len(log_entry) > 1000:
+            return jsonify({'error': 'log_entry must be a non-empty string under 1000 characters'}), 400
         
         cache_key = get_cache_key(f"recommend:{log_entry}")
         cached = get_cached_response(cache_key)
@@ -183,6 +200,7 @@ def recommend():
         response_times.append(time.time() - start)
         return jsonify(fallback_result)
 
+@limiter.limit("5 per minute")
 @app.route('/generate-report', methods=['POST'])
 def generate_report():
     start = time.time()
@@ -191,13 +209,13 @@ def generate_report():
         if not data or 'logs' not in data:
             return jsonify({'error': 'Missing logs in request body'}), 400
         
-        logs = data['logs']
-        if not isinstance(logs, list) or not logs:
-            return jsonify({'error': 'logs must be a non-empty array of strings'}), 400
+        logs = [log.strip() for log in data['logs']]
+        if not isinstance(logs, list) or not logs or len(logs) > 50:
+            return jsonify({'error': 'logs must be a non-empty array with max 50 entries'}), 400
         
         for log in logs:
-            if not isinstance(log, str) or not log.strip():
-                return jsonify({'error': 'All logs must be non-empty strings'}), 400
+            if not isinstance(log, str) or not log or len(log) > 1000:
+                return jsonify({'error': 'Each log must be a non-empty string under 1000 characters'}), 400
         
         logs_text = '\n'.join(logs)
         cache_key = get_cache_key(f"report:{logs_text}")
