@@ -3,12 +3,10 @@ from flask_cors import CORS
 import os
 from datetime import datetime
 from groq import Groq
+import json
 
 app = Flask(__name__)
 CORS(app)
-
-# Groq client will be initialized when needed
-# client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 
 def load_prompt():
     with open('prompts/primary_prompt.txt', 'r') as f:
@@ -51,6 +49,53 @@ def describe():
             'generated_at': datetime.utcnow().isoformat() + 'Z'
         })
     
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    try:
+        data = request.get_json()
+        if not data or 'log_entry' not in data:
+            return jsonify({'error': 'Missing log_entry in request body'}), 400
+        
+        log_entry = data['log_entry']
+        if not isinstance(log_entry, str) or not log_entry.strip():
+            return jsonify({'error': 'log_entry must be a non-empty string'}), 400
+        
+        api_key = os.getenv('GROQ_API_KEY')
+        if not api_key:
+            return jsonify({'error': 'GROQ_API_KEY environment variable not set'}), 500
+        
+        client = Groq(api_key=api_key)
+        
+        prompt = load_prompt()
+        full_prompt = f"{prompt}\n\nLog Entry: {log_entry}\n\nPlease provide exactly 3 recommendations for handling this log entry. Return them as a JSON array of objects, each with 'action_type', 'description', and 'priority' (high, medium, or low). Do not include any other text."
+        
+        response = client.chat.completions.create(
+            model="mixtral-8x7b-32768",
+            messages=[{"role": "user", "content": full_prompt}],
+            max_tokens=500
+        )
+        
+        generated_text = response.choices[0].message.content.strip()
+        
+        recommendations = json.loads(generated_text)
+        
+        if not isinstance(recommendations, list) or len(recommendations) != 3:
+            return jsonify({'error': 'Invalid response format from AI'}), 500
+        
+        for rec in recommendations:
+            if not all(k in rec for k in ['action_type', 'description', 'priority']):
+                return jsonify({'error': 'Invalid recommendation structure'}), 500
+        
+        return jsonify({
+            'recommendations': recommendations,
+            'generated_at': datetime.utcnow().isoformat() + 'Z'
+        })
+    
+    except json.JSONDecodeError:
+        return jsonify({'error': 'Failed to parse AI response as JSON'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
