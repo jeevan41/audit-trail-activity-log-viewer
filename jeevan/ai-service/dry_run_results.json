@@ -3,10 +3,10 @@
     "total_requests": 8,
     "successful_requests": 8,
     "failed_requests": 0,
-    "average_response_time_ms": 5641.22,
-    "min_response_time_ms": 2090.14,
-    "max_response_time_ms": 6187.92,
-    "test_timestamp": "2026-05-06 15:06:27"
+    "average_response_time_ms": 13.65,
+    "min_response_time_ms": 4.01,
+    "max_response_time_ms": 26.72,
+    "test_timestamp": "2026-05-06 15:40:52"
   },
   "test_results": [
     {
@@ -14,13 +14,13 @@
       "method": "GET",
       "description": "Health check",
       "status_code": 200,
-      "response_time_ms": 2090.14,
-      "timestamp": "2026-05-06 15:05:41",
+      "response_time_ms": 10.01,
+      "timestamp": "2026-05-06 15:40:51",
       "response": {
         "avg_response_time": 0,
         "model": "mixtral-8x7b-32768",
         "status": "healthy",
-        "uptime": 3.71
+        "uptime": 30.06
       }
     },
     {
@@ -28,11 +28,11 @@
       "method": "POST",
       "description": "Describe log entry 1",
       "status_code": 200,
-      "response_time_ms": 6129.82,
-      "timestamp": "2026-05-06 15:05:44",
+      "response_time_ms": 26.72,
+      "timestamp": "2026-05-06 15:40:51",
       "response": {
         "description": "Unable to analyze log entry at this time. Please try again later.",
-        "generated_at": "2026-05-06T09:35:50.187348Z",
+        "generated_at": "2026-05-06T10:10:52.020069Z",
         "is_fallback": true
       }
     },
@@ -41,11 +41,11 @@
       "method": "POST",
       "description": "Describe log entry 2",
       "status_code": 200,
-      "response_time_ms": 6111.04,
-      "timestamp": "2026-05-06 15:05:50",
+      "response_time_ms": 4.01,
+      "timestamp": "2026-05-06 15:40:52",
       "response": {
         "description": "Unable to analyze log entry at this time. Please try again later.",
-        "generated_at": "2026-05-06T09:35:56.299240Z",
+        "generated_at": "2026-05-06T10:10:52.026622Z",
         "is_fallback": true
       }
     },
@@ -54,11 +54,11 @@
       "method": "POST",
       "description": "Describe log entry 3",
       "status_code": 200,
-      "response_time_ms": 6134.1,
-      "timestamp": "2026-05-06 15:05:56",
+      "response_time_ms": 26.13,
+      "timestamp": "2026-05-06 15:40:52",
       "response": {
         "description": "Unable to analyze log entry at this time. Please try again later.",
-        "generated_at": "2026-05-06T09:36:02.432505Z",
+        "generated_at": "2026-05-06T10:10:52.051099Z",
         "is_fallback": true
       }
     },
@@ -67,10 +67,10 @@
       "method": "POST",
       "description": "Recommend for log entry 1",
       "status_code": 200,
-      "response_time_ms": 6166.1,
-      "timestamp": "2026-05-06 15:06:02",
+      "response_time_ms": 7.52,
+      "timestamp": "2026-05-06 15:40:52",
       "response": {
-        "generated_at": "2026-05-06T09:36:08.600602Z",
+        "generated_at": "2026-05-06T10:10:52.058152Z",
         "is_fallback": true,
         "recommendations": [
           {
@@ -96,10 +96,10 @@
       "method": "POST",
       "description": "Recommend for log entry 2",
       "status_code": 200,
-      "response_time_ms": 6174.37,
-      "timestamp": "2026-05-06 15:06:08",
+      "response_time_ms": 22.79,
+      "timestamp": "2026-05-06 15:40:52",
       "response": {
-        "generated_at": "2026-05-06T09:36:14.774612Z",
+        "generated_at": "2026-05-06T10:10:52.081423Z",
         "is_fallback": true,
         "recommendations": [
           {
@@ -125,10 +125,10 @@
       "method": "POST",
       "description": "Recommend for log entry 3",
       "status_code": 200,
-      "response_time_ms": 6187.92,
-      "timestamp": "2026-05-06 15:06:14",
+      "response_time_ms": 7.0,
+      "timestamp": "2026-05-06 15:40:52",
       "response": {
-        "generated_at": "2026-05-06T09:36:20.964819Z",
+        "generated_at": "2026-05-06T10:10:52.089965Z",
         "is_fallback": true,
         "recommendations": [
           {
@@ -154,10 +154,10 @@
       "method": "POST",
       "description": "Generate audit report",
       "status_code": 200,
-      "response_time_ms": 6136.23,
-      "timestamp": "2026-05-06 15:06:20",
+      "response_time_ms": 5.06,
+      "timestamp": "2026-05-06 15:40:52",
       "response": {
-        "generated_at": "2026-05-06T09:36:27.103969Z",
+        "generated_at": "2026-05-06T10:10:52.094952Z",
         "is_fallback": true,
         "key_items": [
           "Service temporarily unavailable"

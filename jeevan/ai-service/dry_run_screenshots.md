@@ -1,22 +1,22 @@
 # AI Service Dry Run - Backup Screenshots Documentation
 
 ## Test Environment
-- **Date/Time**: 2026-05-06 15:06:27
+- **Date/Time**: 2026-05-06 15:40:52
 - **Machine**: Demo Development Environment
 - **Python Version**: 3.12
-- **Service URL**: http://localhost:5000
+- **Service URL**: http://127.0.0.1:5000
 
 ## Performance Summary
 - **Total Requests**: 8
 - **Success Rate**: 8/8 (100.0%)
-- **Average Response Time**: 5641.22ms
-- **Response Time Range**: 2090.14ms - 6187.92ms
+- **Average Response Time**: 13.65ms
+- **Response Time Range**: 4.01ms - 26.72ms
 
 ## Endpoint Results
 
 ### 1. Health Check (/health)
 Status: PASS
-Response Time: 2090.14ms
+Response Time: 10.01ms
 
 **Sample Response:**
 ```json
@@ -31,7 +31,7 @@ Response Time: 2090.14ms
 ### 2. Describe Endpoint (/describe)
 Tests: 3 requests
 Status: PASS
-Average Response Time: 6124.99ms
+Average Response Time: 18.95ms
 
 **Sample Response:**
 ```json
@@ -45,7 +45,7 @@ Average Response Time: 6124.99ms
 ### 3. Recommend Endpoint (/recommend)
 Tests: 3 requests
 Status: PASS
-Average Response Time: 6176.13ms
+Average Response Time: 12.44ms
 
 **Sample Response:**
 ```json
@@ -75,7 +75,7 @@ Average Response Time: 6176.13ms
 ### 4. Generate Report Endpoint (/generate-report)
 Tests: 1 request (5 log entries)
 Status: PASS
-Response Time: 6136.23ms
+Response Time: 5.06ms
 
 **Sample Response:**
 ```json
