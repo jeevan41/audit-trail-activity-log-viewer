@@ -24,6 +24,9 @@ limiter = Limiter(
 # Track startup time for uptime
 start_time = time.time()
 
+# Track response times for health endpoint
+response_times = []
+
 # Pre-load sentence transformer model at startup (commented out due to version conflicts)
 # print("Loading sentence transformer model...")
 # model = SentenceTransformer('all-MiniLM-L6-v2')

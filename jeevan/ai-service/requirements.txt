@@ -4,3 +4,4 @@ groq==0.4.1
 redis==5.0.1
 sentence-transformers==2.2.2
 Flask-Limiter==3.5.0
+chromadb==0.4.24
