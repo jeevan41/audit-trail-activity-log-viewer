@@ -4,7 +4,7 @@ import time
 import hashlib
 
 # Test configuration
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://127.0.0.1:5000"
 TEST_ITERATIONS = 5  # Test each endpoint multiple times to check caching
 
 # Test data
@@ -131,7 +131,7 @@ def run_final_verification():
     analyses = {}
 
     # Start Flask app
-    print("📍 Note: Ensure AI service is running on http://localhost:5000")
+    print("📍 Note: Ensure AI service is running on http://127.0.0.1:5000")
     print("📍 Note: GROQ_API_KEY should NOT be set to test fallback behavior")
     print()
 

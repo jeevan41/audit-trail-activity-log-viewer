@@ -27,26 +27,69 @@ start_time = time.time()
 # Track response times for health endpoint
 response_times = []
 
+FALLBACK_TIMEOUT_SECONDS = 1.5
+REDIS_TTL_SECONDS = 900
+
 # Pre-load sentence transformer model at startup (commented out due to version conflicts)
 # print("Loading sentence transformer model...")
 # model = SentenceTransformer('all-MiniLM-L6-v2')
 # print("Sentence transformer model loaded.")
 
 # Redis client
-redis_client = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+redis_client = redis.Redis(
+    host=os.getenv('REDIS_HOST', '127.0.0.1'),
+    port=int(os.getenv('REDIS_PORT', 6379)),
+    db=int(os.getenv('REDIS_DB', 0)),
+    decode_responses=True,
+    socket_connect_timeout=2,
+    socket_timeout=2
+)
+
+redis_available = False
+local_cache = {}
+
+try:
+    redis_client.ping()
+    redis_available = True
+except redis.RedisError:
+    redis_available = False
+
 
 def load_prompt():
     with open('prompts/primary_prompt.txt', 'r') as f:
         return f.read()
 
+
 def get_cache_key(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
-def get_cached_response(key):
-    return redis_client.get(key)
 
-def set_cached_response(key, response, ttl=900):
-    redis_client.setex(key, ttl, json.dumps(response))
+def get_cached_response(key):
+    try:
+        if redis_available:
+            cached = redis_client.get(key)
+            if cached:
+                return json.loads(cached)
+    except (redis.RedisError, json.JSONDecodeError):
+        pass
+
+    cached_entry = local_cache.get(key)
+    if cached_entry:
+        value, expires_at = cached_entry
+        if time.time() < expires_at:
+            return value
+        del local_cache[key]
+    return None
+
+
+def set_cached_response(key, response, ttl=REDIS_TTL_SECONDS):
+    expires_at = time.time() + ttl
+    local_cache[key] = (response, expires_at)
+    if redis_available:
+        try:
+            redis_client.setex(key, ttl, json.dumps(response))
+        except redis.RedisError:
+            pass
 
 # Track response times
 @app.after_request
@@ -92,11 +135,18 @@ def describe():
         cached = get_cached_response(cache_key)
         if cached:
             response_times.append(time.time() - start)
-            return jsonify(json.loads(cached))
+            return jsonify(cached)
         
         api_key = os.getenv('GROQ_API_KEY')
         if not api_key:
-            return jsonify({'error': 'GROQ_API_KEY environment variable not set'}), 500
+            fallback_result = {
+                'description': 'Unable to analyze log entry at this time. Please try again later.',
+                'generated_at': datetime.utcnow().isoformat() + 'Z',
+                'is_fallback': True
+            }
+            set_cached_response(cache_key, fallback_result)
+            response_times.append(time.time() - start)
+            return jsonify(fallback_result)
         
         client = Groq(api_key=api_key)
         
@@ -107,7 +157,7 @@ def describe():
             model="mixtral-8x7b-32768",
             messages=[{"role": "user", "content": full_prompt}],
             max_tokens=500,
-            timeout=10
+            timeout=FALLBACK_TIMEOUT_SECONDS
         )
         
         generated_description = response.choices[0].message.content.strip()
@@ -128,6 +178,7 @@ def describe():
             'generated_at': datetime.utcnow().isoformat() + 'Z',
             'is_fallback': True
         }
+        set_cached_response(cache_key, fallback_result)
         response_times.append(time.time() - start)
         return jsonify(fallback_result)
 
@@ -148,11 +199,22 @@ def recommend():
         cached = get_cached_response(cache_key)
         if cached:
             response_times.append(time.time() - start)
-            return jsonify(json.loads(cached))
+            return jsonify(cached)
         
         api_key = os.getenv('GROQ_API_KEY')
         if not api_key:
-            return jsonify({'error': 'GROQ_API_KEY environment variable not set'}), 500
+            fallback_result = {
+                'recommendations': [
+                    {'action_type': 'monitor', 'description': 'Monitor the log entry for unusual activity', 'priority': 'medium'},
+                    {'action_type': 'log', 'description': 'Ensure the event is properly logged', 'priority': 'low'},
+                    {'action_type': 'review', 'description': 'Review similar entries for patterns', 'priority': 'low'}
+                ],
+                'generated_at': datetime.utcnow().isoformat() + 'Z',
+                'is_fallback': True
+            }
+            set_cached_response(cache_key, fallback_result)
+            response_times.append(time.time() - start)
+            return jsonify(fallback_result)
         
         client = Groq(api_key=api_key)
         
@@ -163,7 +225,7 @@ def recommend():
             model="mixtral-8x7b-32768",
             messages=[{"role": "user", "content": full_prompt}],
             max_tokens=500,
-            timeout=10
+            timeout=FALLBACK_TIMEOUT_SECONDS
         )
         
         generated_text = response.choices[0].message.content.strip()
@@ -200,6 +262,7 @@ def recommend():
             'generated_at': datetime.utcnow().isoformat() + 'Z',
             'is_fallback': True
         }
+        set_cached_response(cache_key, fallback_result)
         response_times.append(time.time() - start)
         return jsonify(fallback_result)
 
@@ -225,11 +288,22 @@ def generate_report():
         cached = get_cached_response(cache_key)
         if cached:
             response_times.append(time.time() - start)
-            return jsonify(json.loads(cached))
+            return jsonify(cached)
         
         api_key = os.getenv('GROQ_API_KEY')
         if not api_key:
-            return jsonify({'error': 'GROQ_API_KEY environment variable not set'}), 500
+            fallback_result = {
+                'title': 'Audit Report - Service Unavailable',
+                'summary': 'Unable to generate detailed report at this time.',
+                'overview': 'Please try again later.',
+                'key_items': ['Service temporarily unavailable'],
+                'recommendations': ['Retry the request', 'Check system status'],
+                'generated_at': datetime.utcnow().isoformat() + 'Z',
+                'is_fallback': True
+            }
+            set_cached_response(cache_key, fallback_result)
+            response_times.append(time.time() - start)
+            return jsonify(fallback_result)
         
         client = Groq(api_key=api_key)
         
@@ -239,7 +313,7 @@ def generate_report():
             model="mixtral-8x7b-32768",
             messages=[{"role": "user", "content": full_prompt}],
             max_tokens=1000,
-            timeout=10
+            timeout=FALLBACK_TIMEOUT_SECONDS
         )
         
         generated_text = response.choices[0].message.content.strip()
@@ -271,6 +345,7 @@ def generate_report():
             'generated_at': datetime.utcnow().isoformat() + 'Z',
             'is_fallback': True
         }
+        set_cached_response(cache_key, fallback_result)
         response_times.append(time.time() - start)
         return jsonify(fallback_result)
 

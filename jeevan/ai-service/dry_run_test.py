@@ -12,7 +12,7 @@ test_logs = [
     "2024-01-15 10:34:18 - Database query executed: SELECT * FROM users WHERE role='admin'"
 ]
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://127.0.0.1:5000"
 
 def test_endpoint(endpoint, method='GET', data=None, description=""):
     """Test an endpoint and record response time"""
@@ -158,7 +158,7 @@ def create_backup_screenshots(results, stats):
 - **Date/Time**: {stats['test_timestamp']}
 - **Machine**: Demo Development Environment
 - **Python Version**: 3.12
-- **Service URL**: http://localhost:5000
+- **Service URL**: http://127.0.0.1:5000
 
 ## Performance Summary
 - **Total Requests**: {stats['total_requests']}

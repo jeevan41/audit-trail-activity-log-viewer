@@ -36,7 +36,7 @@ demo_logs = [
     "2024-01-15 10:59:25 - System integrity check passed for all critical files"
 ]
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://127.0.0.1:5000"
 
 def test_describe_endpoint():
     print("Testing /describe endpoint with 30 demo records...")
