@@ -1,0 +1,181 @@
+{
+  "dry_run_stats": {
+    "total_requests": 8,
+    "successful_requests": 8,
+    "failed_requests": 0,
+    "average_response_time_ms": 5641.22,
+    "min_response_time_ms": 2090.14,
+    "max_response_time_ms": 6187.92,
+    "test_timestamp": "2026-05-06 15:06:27"
+  },
+  "test_results": [
+    {
+      "endpoint": "/health",
+      "method": "GET",
+      "description": "Health check",
+      "status_code": 200,
+      "response_time_ms": 2090.14,
+      "timestamp": "2026-05-06 15:05:41",
+      "response": {
+        "avg_response_time": 0,
+        "model": "mixtral-8x7b-32768",
+        "status": "healthy",
+        "uptime": 3.71
+      }
+    },
+    {
+      "endpoint": "/describe",
+      "method": "POST",
+      "description": "Describe log entry 1",
+      "status_code": 200,
+      "response_time_ms": 6129.82,
+      "timestamp": "2026-05-06 15:05:44",
+      "response": {
+        "description": "Unable to analyze log entry at this time. Please try again later.",
+        "generated_at": "2026-05-06T09:35:50.187348Z",
+        "is_fallback": true
+      }
+    },
+    {
+      "endpoint": "/describe",
+      "method": "POST",
+      "description": "Describe log entry 2",
+      "status_code": 200,
+      "response_time_ms": 6111.04,
+      "timestamp": "2026-05-06 15:05:50",
+      "response": {
+        "description": "Unable to analyze log entry at this time. Please try again later.",
+        "generated_at": "2026-05-06T09:35:56.299240Z",
+        "is_fallback": true
+      }
+    },
+    {
+      "endpoint": "/describe",
+      "method": "POST",
+      "description": "Describe log entry 3",
+      "status_code": 200,
+      "response_time_ms": 6134.1,
+      "timestamp": "2026-05-06 15:05:56",
+      "response": {
+        "description": "Unable to analyze log entry at this time. Please try again later.",
+        "generated_at": "2026-05-06T09:36:02.432505Z",
+        "is_fallback": true
+      }
+    },
+    {
+      "endpoint": "/recommend",
+      "method": "POST",
+      "description": "Recommend for log entry 1",
+      "status_code": 200,
+      "response_time_ms": 6166.1,
+      "timestamp": "2026-05-06 15:06:02",
+      "response": {
+        "generated_at": "2026-05-06T09:36:08.600602Z",
+        "is_fallback": true,
+        "recommendations": [
+          {
+            "action_type": "monitor",
+            "description": "Monitor the log entry for unusual activity",
+            "priority": "medium"
+          },
+          {
+            "action_type": "log",
+            "description": "Ensure the event is properly logged",
+            "priority": "low"
+          },
+          {
+            "action_type": "review",
+            "description": "Review similar entries for patterns",
+            "priority": "low"
+          }
+        ]
+      }
+    },
+    {
+      "endpoint": "/recommend",
+      "method": "POST",
+      "description": "Recommend for log entry 2",
+      "status_code": 200,
+      "response_time_ms": 6174.37,
+      "timestamp": "2026-05-06 15:06:08",
+      "response": {
+        "generated_at": "2026-05-06T09:36:14.774612Z",
+        "is_fallback": true,
+        "recommendations": [
+          {
+            "action_type": "monitor",
+            "description": "Monitor the log entry for unusual activity",
+            "priority": "medium"
+          },
+          {
+            "action_type": "log",
+            "description": "Ensure the event is properly logged",
+            "priority": "low"
+          },
+          {
+            "action_type": "review",
+            "description": "Review similar entries for patterns",
+            "priority": "low"
+          }
+        ]
+      }
+    },
+    {
+      "endpoint": "/recommend",
+      "method": "POST",
+      "description": "Recommend for log entry 3",
+      "status_code": 200,
+      "response_time_ms": 6187.92,
+      "timestamp": "2026-05-06 15:06:14",
+      "response": {
+        "generated_at": "2026-05-06T09:36:20.964819Z",
+        "is_fallback": true,
+        "recommendations": [
+          {
+            "action_type": "monitor",
+            "description": "Monitor the log entry for unusual activity",
+            "priority": "medium"
+          },
+          {
+            "action_type": "log",
+            "description": "Ensure the event is properly logged",
+            "priority": "low"
+          },
+          {
+            "action_type": "review",
+            "description": "Review similar entries for patterns",
+            "priority": "low"
+          }
+        ]
+      }
+    },
+    {
+      "endpoint": "/generate-report",
+      "method": "POST",
+      "description": "Generate audit report",
+      "status_code": 200,
+      "response_time_ms": 6136.23,
+      "timestamp": "2026-05-06 15:06:20",
+      "response": {
+        "generated_at": "2026-05-06T09:36:27.103969Z",
+        "is_fallback": true,
+        "key_items": [
+          "Service temporarily unavailable"
+        ],
+        "overview": "Please try again later.",
+        "recommendations": [
+          "Retry the request",
+          "Check system status"
+        ],
+        "summary": "Unable to generate detailed report at this time.",
+        "title": "Audit Report - Service Unavailable"
+      }
+    }
+  ],
+  "environment": {
+    "python_version": "3.12",
+    "flask_debug": true,
+    "redis_connected": false,
+    "chromadb_initialized": true
+  }
+}
