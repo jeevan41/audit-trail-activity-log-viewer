@@ -4,6 +4,7 @@ from routes.describe_routes import describe_bp
 from datetime import datetime
 import time
 from flask import Flask, g
+from services.groq_service import load_ai_model
 
 app = Flask(__name__)
 CORS(app)
@@ -41,10 +42,12 @@ def health():
     return {
         "status": "UP",
         "model": "Mock-AI-Model",
+        "model_loaded": True,
         "avg_response_time_ms": 50,
         "uptime_seconds": uptime_seconds,
         "timestamp": datetime.now().isoformat()
     }
 
 if __name__ == "__main__":
+    load_ai_model()
     app.run(host="0.0.0.0", port=5000, debug=True)

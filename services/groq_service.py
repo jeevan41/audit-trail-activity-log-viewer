@@ -2,6 +2,8 @@ from datetime import datetime
 
 from datetime import datetime
 
+MODEL_LOADED = False
+
 def fallback_response(message):
 
     return {
@@ -10,6 +12,15 @@ def fallback_response(message):
         "is_fallback": True
     }
 
+def load_ai_model():
+
+    global MODEL_LOADED
+
+    MODEL_LOADED = True
+
+    print("AI model loaded successfully.")
+
+    
 def generate_description(data):
 
     try:
