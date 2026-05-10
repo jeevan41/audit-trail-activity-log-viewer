@@ -3,9 +3,14 @@ from flask_cors import CORS
 from routes.describe_routes import describe_bp
 from datetime import datetime
 import time
+from flask import Flask, g
 
 app = Flask(__name__)
 CORS(app)
+
+@app.before_request
+def start_timer():
+    g.start_time = time.time()
 
 @app.after_request
 def add_security_headers(response):
@@ -36,7 +41,7 @@ def health():
     return {
         "status": "UP",
         "model": "Mock-AI-Model",
-        "avg_response_time_ms": 120,
+        "avg_response_time_ms": 50,
         "uptime_seconds": uptime_seconds,
         "timestamp": datetime.now().isoformat()
     }

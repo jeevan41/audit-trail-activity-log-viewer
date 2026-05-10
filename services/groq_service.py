@@ -2,6 +2,14 @@ from datetime import datetime
 
 from datetime import datetime
 
+def fallback_response(message):
+
+    return {
+        "message": message,
+        "generated_at": datetime.now().isoformat(),
+        "is_fallback": True
+    }
+
 def generate_description(data):
 
     try:
@@ -35,12 +43,9 @@ def generate_description(data):
 
         print("AI generation error:", str(e))
 
-        return {
-            "description": "Unable to generate audit description currently.",
-            "risk_level": "UNKNOWN",
-            "generated_at": datetime.now().isoformat(),
-            "is_fallback": True
-        }
+        return fallback_response(
+            "Unable to generate audit description currently."
+    )
     
 def generate_recommendations(data):
 
@@ -79,10 +84,9 @@ def generate_recommendations(data):
 
         print("Recommendation error:", str(e))
 
-        return {
-            "recommendations": [],
-            "is_fallback": True
-        }
+        return fallback_response(
+            "Unable to generate recommendations currently."
+    )
     
 
 def generate_report(data):
@@ -128,12 +132,6 @@ def generate_report(data):
 
         print("Generate report error:", str(e))
 
-        return {
-            "title": "Fallback Audit Report",
-            "summary": "Unable to generate report currently.",
-            "overview": "Fallback response generated.",
-            "key_items": [],
-            "recommendations": [],
-            "generated_at": datetime.now().isoformat(),
-            "is_fallback": True
-        }
+        return fallback_response(
+            "Unable to generate report currently."
+    )
