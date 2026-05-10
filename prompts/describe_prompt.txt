@@ -24,3 +24,6 @@ Output Format:
   "description": "Generated audit activity description",
   "risk_level": "LOW | MEDIUM | HIGH"
 }
+
+Prioritize security-related insights for suspicious activities.
+Highlight operational concerns clearly when detected.
