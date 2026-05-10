@@ -25,3 +25,33 @@ def generate_description(data):
         "risk_level": risk_level,
         "generated_at": datetime.now().isoformat()
     }
+
+def generate_recommendations(data):
+
+    action = data.get("action_type", "").upper()
+    status = data.get("status", "").upper()
+
+    recommendations = []
+
+    if "LOGIN" in action and "FAILED" in status:
+        recommendations.append({
+            "action_type": "ACCOUNT_REVIEW",
+            "description": "Review failed login attempts for suspicious activity.",
+            "priority": "HIGH"
+        })
+
+    recommendations.append({
+        "action_type": "MONITOR_ACTIVITY",
+        "description": "Continue monitoring user activity logs regularly.",
+        "priority": "MEDIUM"
+    })
+
+    recommendations.append({
+        "action_type": "SECURITY_AUDIT",
+        "description": "Perform periodic security audits for sensitive modules.",
+        "priority": "LOW"
+    })
+
+    return {
+        "recommendations": recommendations
+    }
